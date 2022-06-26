@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Render HTML</title>
+    <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Inter:200,300,400&display=swap" rel="stylesheet"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    
+        <meta name="description" content="Learn how to render HTML with fritz2">
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#333333">
+</head>
+<body class="bg-bg font-sans">
+
+
+<!-- Background color split screen for large screens -->
+<div class="fixed top-0 left-0 w-1/2 h-full bg-bg" aria-hidden="true"></div>
+<div class="fixed top-0 right-0 w-1/2 h-full bg-bg" aria-hidden="true"></div>
+<div class="relative flex flex-col bg-bg">
+<!-- Navbar -->
+<nav class="fixed h-16 px-4 z-20 w-full font-nunito text-white bg-bg bg-gray-800">
+  <div class="relative flex items-center justify-between h-16">
+    <a class="flex items-center justify-start px-0 w-48 hover:text-gray-300 min-w-fit" href="/">
+      <!-- fritz2 logo -->
+      <svg class="ml-1 h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+           fill="currentColor" stroke="none" >
+          <path d="M 9.987 0.229 C 4.469 0.236 0 4.61 0 10.003 C 0 15.401 4.477 19.777 10 19.777 C 15.523 19.777 20 15.401 20 10.003 C 20 4.605 15.523 0.229 10 0.229 C 9.996 0.229 9.992 0.229 9.987 0.229 Z M 14.678 2.662 C 15.144 2.665 15.52 3.043 15.517 3.506 L 15.5 6.862 C 15.497 7.325 15.118 7.699 14.652 7.696 C 14.187 7.694 13.811 7.316 13.813 6.853 L 12.126 6.844 C 11.661 6.842 11.281 7.216 11.278 7.679 L 11.274 8.501 L 12.052 8.501 C 12.072 8.499 12.092 8.499 12.112 8.499 C 12.575 8.499 12.952 8.882 12.952 9.356 C 12.952 9.829 12.575 10.213 12.112 10.213 C 12.089 10.213 12.066 10.212 12.043 10.21 L 7.111 10.21 L 7.111 10.207 C 7.097 10.208 7.084 10.208 7.071 10.208 C 6.607 10.208 6.231 9.825 6.231 9.353 C 6.231 8.881 6.607 8.498 7.071 8.498 C 7.091 8.498 7.111 8.499 7.131 8.501 L 7.9 8.501 L 7.909 6.823 C 7.918 4.969 9.437 3.474 11.3 3.484 L 13.83 3.497 C 13.833 3.034 14.212 2.66 14.678 2.662 Z M 7.887 10.644 L 11.261 10.662 L 11.248 13.179 C 11.238 15.032 9.72 16.527 7.857 16.517 L 6.17 16.509 C 6.167 16.972 5.787 17.346 5.322 17.343 C 4.856 17.341 4.48 16.963 4.483 16.5 L 4.5 13.144 C 4.502 12.681 4.882 12.307 5.348 12.309 C 5.813 12.312 6.189 12.69 6.187 13.153 L 7.031 13.157 C 7.496 13.159 7.876 12.786 7.878 12.322 Z"/>
+        </svg>
+        <div class="ml-3">
+          <span class="text-2xl">fritz2</span>
+          <span class="ml-1 text-xs">1.0-SNAPSHOT</span>
+        </div>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="-mr-2 flex items-center md:hidden">
+      <!-- Mobile menu button -->
+      <button type="button" id="mobile-menu-button" onclick="toggleMenu()"
+              class="p-2 inline-flex items-center justify-center bg-gray-800 rounded-md text-gray-400 hover:bg-gray-900 focus:outline-none focus:ring-1 focus-ring-inset focus:ring-gray-400"
+              aria-controls="mobile-menu" aria-expanded="false">
+        <span class="sr-only">Open menu</span>
+        <span class="mobile-icon block h-6 w-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" data-heroicon-name="menu" data-heroicon-style="outline"><title>open main menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </span>
+        <span class="mobile-icon hidden h-6 w-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" data-heroicon-name="x" data-heroicon-style="outline"><title>close main menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </span>
+      </button>
+    </div>
+    <!-- Links section -->
+    <div class="hidden md:block w-24 md:w-48 lg:w-64 ">
+      <div class="flex items-center justify-end hover:text-gray-200">
+        <!-- Github -->
+        <div class="ml-4 relative flex-shrink-0">
+          <div>
+            <a target="_blank" href="https://github.com/jwstegemann/fritz2">
+              <svg class="mr-1 h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                   fill="currentColor" stroke="none" >
+                <path d="M 9.983 0 C 4.458 0 -0.017 4.478 -0.017 10 C -0.017 14.419 2.848 18.167 6.821 19.488 C 7.321 19.582 7.504 19.273 7.504 19.007 C 7.504 18.769 7.496 18.14 7.492 17.307 C 4.71 17.91 4.123 15.965 4.123 15.965 C 3.668 14.811 3.011 14.503 3.011 14.503 C 2.105 13.883 3.081 13.895 3.081 13.895 C 4.085 13.965 4.613 14.925 4.613 14.925 C 5.504 16.454 6.953 16.013 7.525 15.757 C 7.615 15.11 7.873 14.669 8.158 14.419 C 5.938 14.169 3.603 13.309 3.603 9.478 C 3.603 8.386 3.991 7.494 4.633 6.794 C 4.52 6.542 4.183 5.525 4.72 4.148 C 4.72 4.148 5.558 3.879 7.47 5.173 C 8.27 4.95 9.12 4.84 9.97 4.835 C 10.82 4.84 11.67 4.95 12.47 5.173 C 14.37 3.879 15.208 4.148 15.208 4.148 C 15.745 5.525 15.408 6.542 15.308 6.794 C 15.945 7.494 16.333 8.386 16.333 9.478 C 16.333 13.319 13.995 14.165 11.77 14.411 C 12.12 14.711 12.445 15.324 12.445 16.261 C 12.445 17.599 12.433 18.674 12.433 18.999 C 12.433 19.262 12.608 19.574 13.12 19.474 C 17.121 18.163 19.983 14.413 19.983 10 C 19.983 4.478 15.506 0 9.983 0"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+  <!-- Mobile menu, show/hide based on menu state. -->
+  <div id="mobile-menu" class="fixed z-10 w-full bg-bg top-16 -translate-y-[100vh] transition-transform duration-250 ease-in md:hidden pb-2 border-b border-b-fg px-2 pt-2 pb-3 h-[calc(100vh-4rem)] overflow-y-auto">
+    
+    
+<nav class="flex-1 bg-bg space-y-2" aria-label="Sidebar">
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="academic-cap" data-heroicon-style="solid"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
+            </span>
+        
+        Documentation
+</a>
+
+        
+        
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/start/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Getting Started
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/render/"
+   class=" pl-12 bg-bg-highlight border-fg text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Render HTML
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/state/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        State Management
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/validation/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Validation
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/routing/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Routing
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/http/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Http
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/websockets/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Websockets
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/repositories/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Repositories
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/web-components/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Web Components
+</a>
+
+            
+        
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="puzzle" data-heroicon-style="solid"><path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/></svg>
+            </span>
+        
+        Headless Components
+</a>
+
+        
+        
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/checkboxgroup/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        CheckboxGroup
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/datacollection/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        DataCollection
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/disclosure/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Disclosure
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/inputfield/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        InputField
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/listbox/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Listbox (Select)
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/menu/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Menu
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/modal/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Modal
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/popover/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        PopOver
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/radioGroup/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        RadioGroup
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/switch/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Switch (Toggle)
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/tabgroup/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        TabGroup
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/textarea/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        TextArea
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/tooltip/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Tooltip
+</a>
+
+            
+        
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/blog/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="newspaper" data-heroicon-style="solid"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"/><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"/></svg>
+            </span>
+        
+        Blog
+</a>
+
+        
+        
+            
+        
+    
+</nav>
+
+    
+  </div>
+
+  <!-- 3 column wrapper -->
+<div class="mt-16 h-[calc(100vh-4rem)] flex-grow w-full mx-auto md:flex">
+  <!-- Left sidebar & main wrapper -->
+    <div class="min-w-fit h-full overscroll-none overflow-y-auto w-64 xl:border-b-0 bg-bg hidden md:block">
+        <!-- Start left column area -->
+        <div class="mt-6 relative" style="min-height: 12rem;">
+          
+<nav class="flex-1 bg-bg space-y-2" aria-label="Sidebar">
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="academic-cap" data-heroicon-style="solid"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
+            </span>
+        
+        Documentation
+</a>
+
+        
+        
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/start/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Getting Started
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/render/"
+   class=" pl-12 bg-bg-highlight border-fg text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Render HTML
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/state/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        State Management
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/validation/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Validation
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/routing/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Routing
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/http/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Http
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/websockets/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Websockets
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/repositories/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Repositories
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/web-components/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Web Components
+</a>
+
+            
+        
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="puzzle" data-heroicon-style="solid"><path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/></svg>
+            </span>
+        
+        Headless Components
+</a>
+
+        
+        
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/blog/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="newspaper" data-heroicon-style="solid"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"/><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"/></svg>
+            </span>
+        
+        Blog
+</a>
+
+        
+        
+    
+</nav>
+
+        </div>
+        <!-- End left column area -->
+    </div>
+
+
+    
+<div class="bg-bg md:min-w-0 md:flex-1 h-full">
+  <div class="h-full py-6 px-5 sm:px-6 lg:px-8 h-full overscroll-none overflow-y-auto bg-bg lg:pr-72">
+    <!-- Start main area-->
+    <div class="relative content prose prose-invert max-w-prose pb-12">
+
+      <h1>Render HTML</h1>
+
+      
+
+      
+
+      <p>fritz2 offers a rich DSL to create the HTML for your application. You just have to call the global <code>render</code> function
+inside to create an initial <code>RenderContext</code> in which you can then call the HTML-Tag functions provided by fritz2
+like <code>div</code>.</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    render <span class="token punctuation">{</span> <span class="token comment">// by default target = document.body</span><br>        <span class="token function">div</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"header"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br><br>        <span class="token punctuation">}</span><br>        <span class="token function">div</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"container"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>            h1 <span class="token punctuation">{</span> <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"Hello World!"</span></span> <span class="token punctuation">}</span><br>        <span class="token punctuation">}</span><br>        <span class="token function">div</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"footer"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>This code results in:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>target<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>header<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>container<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><br>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>Hello World!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>footer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></code></pre>
+<h2 id="reuse-your-html" tabindex="-1">Reuse Your HTML</h2>
+<p>It's very easy to create a lightweight reusable component with fritz2. Basically all you have to do is write a function
+with <code>RenderContext</code> as its receiver type:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> RenderContext<span class="token punctuation">.</span><span class="token function">myComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    p <span class="token punctuation">{</span><br>        <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"This is the smallest valid stateless component"</span></span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br>render <span class="token punctuation">{</span><br>    <span class="token function">myComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br><span class="token punctuation">}</span></code></pre>
+<p>Of course, you can also use a subtype of <code>RenderContext</code> like a certain <code>Tag</code> as receiver if you want to limit the usage
+of your component to this type as its parent.</p>
+<p>By using plain functions, it's also straight forward to parametrize your component:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> RenderContext<span class="token punctuation">.</span><span class="token function">myOtherComponent</span><span class="token punctuation">(</span>person<span class="token operator">:</span> Person<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    p <span class="token punctuation">{</span><br>        <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"Hello, my name is </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token expression">person<span class="token punctuation">.</span>name</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">!"</span></span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">val</span> somePerson <span class="token operator">=</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token operator">..</span><span class="token punctuation">.</span><span class="token punctuation">)</span><br>render <span class="token punctuation">{</span><br>    div <span class="token punctuation">{</span><br>        <span class="token function">myOtherComponent</span><span class="token punctuation">(</span>somePerson<span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>To allow nested components, use a lambda with <code>RenderContext</code> as its receiver, or the type of the element you are
+calling this lambda in:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token comment">// return a html element if you need it</span><br><span class="token keyword">fun</span> RenderContext<span class="token punctuation">.</span><span class="token function">container</span><span class="token punctuation">(</span>content<span class="token operator">:</span> RenderContext<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token function">div</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"container"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        <span class="token function">content</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br>render <span class="token punctuation">{</span><br>    container <span class="token punctuation">{</span><br>        p <span class="token punctuation">{</span><br>            <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"Hello World!"</span></span><br>        <span class="token punctuation">}</span><br><br>        clicks handledBy someHandler <span class="token comment">// you will see what this does in the next chapter</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>Using <code>Div</code> as receiver type in the example above allows you to access the specific attributes and events of your
+container-element from your content-lambda. Use <code>RenderContext</code> if this is not necessary or intended.</p>
+<h2 id="set-your-attributes" tabindex="-1">Set Your Attributes</h2>
+<p>To create rich html-interfaces you will want to use a variety of attributes. In fritz2 there are several easy ways to
+achieve this depending on your use case.</p>
+<p>You can set all html-attributes inside the <code>Tag</code>'s content by calling a function of the according name. Every standard
+html attribute has two functions. One sets a static value every time the element is re-rendered, the second collects
+dynamic data coming from a <code>Flow</code>. When coming from a <code>Flow</code>, the attribute's value will be updated in the
+DOM whenever a new value appears on the <code>Flow</code>
+without having to re-render the whole element:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> flowOfInts <span class="token operator">=</span> <span class="token operator">..</span><span class="token punctuation">.</span> <span class="token comment">// i.e. get it from some store</span><br><br>render <span class="token punctuation">{</span><br>    input <span class="token punctuation">{</span><br>        <span class="token function">placeholder</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"some text"</span></span><span class="token punctuation">)</span><br>        <span class="token function">maxLength</span><span class="token punctuation">(</span>flowOfInts<span class="token punctuation">)</span><br>        <span class="token function">disabled</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>If you want to set a <code>Boolean</code> value, you can set an optional parameter <code>trueValue</code> which will be set as the
+attribute-value if your data is <code>true</code>:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> isLow <span class="token operator">=</span> myStore<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span> i <span class="token operator">-></span> i <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token punctuation">}</span><br><br>render <span class="token punctuation">{</span><br>    button <span class="token punctuation">{</span><br>        <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"My button"</span></span><br>        <span class="token function">attr</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"data-low"</span></span><span class="token punctuation">,</span> isLow<span class="token punctuation">,</span> trueValue <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"true"</span></span><span class="token punctuation">)</span><br>        <span class="token comment">// isLow == true  -> &lt;button data-low="true">My button&lt;/button></span><br>        <span class="token comment">// isLow == false -> &lt;button>My button&lt;/button></span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>This is sometimes needed for CSS-selection or animations.</p>
+<p>To set a value for a custom (data-) attribute, use the <code>attr()</code>-function. It works for static and dynamic (from
+a <code>Flow</code>) values:</p>
+<pre class="language-kotlin"><code class="language-kotlin">render <span class="token punctuation">{</span><br>    div <span class="token punctuation">{</span><br>        <span class="token function">attr</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"data-something"</span></span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"someValue"</span></span><span class="token punctuation">)</span><br>        <span class="token function">attr</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"data-something"</span></span><span class="token punctuation">,</span> <span class="token function">flowOf</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"someValue"</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>Sometimes it is important for an attribute to only appear if some condition is <code>true</code>, for example some
+<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA">ARIA</a> properties like
+<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls">aria-controls</a> should
+preferably appear only if the dependent element exist. The <code>attr</code> functions for <code>Flows</code> behave in such a way, that they
+only set an attribute if the value is <em>not</em> <code>null</code>. This behaviour could be used to achieve the desired effect:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> isOpened <span class="token operator">=</span> <span class="token function">storeOf</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><br><br>render <span class="token punctuation">{</span><br>    button <span class="token punctuation">{</span><br>        <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"Toggle"</span></span><br>        <span class="token comment">// This mechanism is later explained in "State Management".</span><br>        <span class="token comment">// Just accept for now this simply toggles the boolean value in the store by each click.</span><br>        clicks<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span> <span class="token operator">!</span>isOpened<span class="token punctuation">.</span>current <span class="token punctuation">}</span> handledBy isOpened<span class="token punctuation">.</span>update<br><br>        <span class="token function">attr</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"aria-controls"</span></span><span class="token punctuation">,</span> isOpened<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>it<span class="token punctuation">)</span> <span class="token string-literal singleline"><span class="token string">"disclosure"</span></span> <span class="token keyword">else</span> <span class="token keyword">null</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><br>        <span class="token comment">//                                                                  ^^^^</span><br>        <span class="token comment">//      make whole attribute disappear if disclosure-div is not rendered</span><br>    <span class="token punctuation">}</span><br><br>    isOpened<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">render</span> <span class="token punctuation">{</span><br>        <span class="token keyword">if</span> <span class="token punctuation">(</span>it<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>            <span class="token function">div</span><span class="token punctuation">(</span>id <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"disclosure"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>                <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"I am open!"</span></span><br>            <span class="token punctuation">}</span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<h2 id="working-with-css-classes" tabindex="-1">Working with CSS-Classes</h2>
+<p>The <code>class</code> attribute of a <code>Tag</code> for working with CSS style-classes is somewhat special. You can set the static values
+of each <code>Tag</code> for <code>class</code> and <code>id</code> by using the optional parameters of its factory function:</p>
+<pre class="language-kotlin"><code class="language-kotlin">render <span class="token punctuation">{</span><br>    <span class="token function">div</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"some-static-css-class"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        <span class="token function">button</span><span class="token punctuation">(</span>id <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"someId"</span></span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>Use this one-liner to add styling and meaning to your elements by using semantic CSS class-names. Also, it keeps your
+code clean when using CSS frameworks like Bootstrap, Tailwind etc.</p>
+<p>To dynamically change the styling of a rendered element, you can add dynamic classes by assigning a <code>Flow</code> of strings to
+the <code>className</code>-attribute (like with any other attribute).</p>
+<pre class="language-kotlin"><code class="language-kotlin">render <span class="token punctuation">{</span><br>    <span class="token keyword">val</span> enabled <span class="token operator">=</span> <span class="token function">storeOf</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><br><br>    div <span class="token punctuation">{</span><br>        <span class="token function">className</span><span class="token punctuation">(</span>enabled<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span><br>            <span class="token keyword">if</span> <span class="token punctuation">(</span>it<span class="token punctuation">)</span> <span class="token string-literal singleline"><span class="token string">"background-color: lightgreen;"</span></span><br>            <span class="token keyword">else</span> <span class="token string-literal singleline"><span class="token string">"opacity: 0.5; background-color: lightgrey;"</span></span><br>        <span class="token punctuation">}</span><span class="token punctuation">)</span><br>        <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"Some important content"</span></span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>The same works for <code>List&lt;String&gt;</code>s with the <code>classList</code>-attribute.</p>
+<p>Additionally, you can build a <code>Map&lt;String, Boolean&gt;</code> from your model data that enables and disables single classes
+dynamically:</p>
+<pre class="language-kotlin"><code class="language-kotlin">render <span class="token punctuation">{</span><br>    div <span class="token punctuation">{</span><br>        <span class="token function">classMap</span><span class="token punctuation">(</span>toDoStore<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span><br>            <span class="token function">mapOf</span><span class="token punctuation">(</span><br>                <span class="token string-literal singleline"><span class="token string">"completed"</span></span> <span class="token keyword">to</span> it<span class="token punctuation">.</span>completed<span class="token punctuation">,</span> <span class="token comment">// a boolean-attribute in the data-model</span><br>                <span class="token string-literal singleline"><span class="token string">"editing"</span></span> <span class="token keyword">to</span> it<span class="token punctuation">.</span>editing<br>            <span class="token punctuation">)</span><br>        <span class="token punctuation">}</span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>fritz2 also offers a function for setting the inline <code>style</code> attribute to your elements:</p>
+<pre class="language-kotlin"><code class="language-kotlin">render <span class="token punctuation">{</span><br>    p <span class="token punctuation">{</span><br>        <span class="token function">inlineStyle</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"color: red"</span></span><span class="token punctuation">)</span><br>        <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"this is red text"</span></span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<h2 id="scope" tabindex="-1">Scope</h2>
+<p>fritz2 offers the possibility to use a <code>Scope</code> to add some information to a tag which can then be received by any
+child-tag of the corresponding DOM-subtree and which will not be rendered out by default. The values in the <code>Scope</code> are
+only available for tags inside the context of the tag which sets them.</p>
+<p>To append something to the <code>Scope</code> you have to create a <code>Scope.Key</code> by using the
+<code>Scope.keyOf()</code> function.</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> myKey <span class="token operator">=</span> Scope<span class="token punctuation">.</span>keyOf<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"myKeyName"</span></span><span class="token punctuation">)</span></code></pre>
+<p>The key is needed to set or get a value to the <code>Scope</code>.</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> fooKey <span class="token operator">=</span> Scope<span class="token punctuation">.</span>keyOf<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"foo"</span></span><span class="token punctuation">)</span><br><br>render <span class="token punctuation">{</span><br>    <span class="token function">div</span><span class="token punctuation">(</span>scope <span class="token operator">=</span> <span class="token punctuation">{</span><br>        <span class="token keyword">set</span><span class="token punctuation">(</span>fooKey<span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"bar"</span></span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        div <span class="token punctuation">{</span><br>            <span class="token comment">// div is child of scope owner, so key is accessible</span><br>            <span class="token operator">+</span><span class="token punctuation">(</span>scope<span class="token punctuation">[</span>fooKey<span class="token punctuation">]</span> <span class="token operator">?:</span> <span class="token string-literal singleline"><span class="token string">""</span></span><span class="token punctuation">)</span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br>    div <span class="token punctuation">{</span><br>        <span class="token comment">// this div is not a child, so key is not in its (empty) scope</span><br>        <span class="token operator">+</span><span class="token punctuation">(</span>scope<span class="token punctuation">[</span>fooKey<span class="token punctuation">]</span> <span class="token operator">?:</span> <span class="token string-literal singleline"><span class="token string">""</span></span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>The result is the following:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>bar<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<p>For debugging proposes you can use the <code>scope.asDataAttr()</code> function to set current scope to the tag and see it
+in the DOM-Tree.</p>
+
+
+    </div>
+    <!-- End main area -->
+  </div>
+</div>
+
+<div
+    class="fixed lg:block top-16 right-0 h-full hidden pr-4 sm:pr-6 lg:pr-8 lg:pr-2">
+    <div class="w-64 h-full overscroll-none overflow-y-auto pl-6 py-6">
+        <!-- Start right column area -->
+        <div class="h-full relative" style="min-height: 16rem;">
+
+            <h2 class="text-sm font-bold capitalize text-fg-highlight mb-4">On this Page</h2>
+
+            <nav class="toc" >
+        <ul><li><a href="#reuse-your-html">Reuse Your HTML</a></li><li><a href="#set-your-attributes">Set Your Attributes</a></li><li><a href="#working-with-css-classes">Working with CSS-Classes</a></li><li><a href="#scope">Scope</a></li></ul>
+      </nav>
+
+        </div>
+        <!-- End right column area -->
+    </div>
+</div>
+
+
+  </div>
+</div>
+
+
+<script src="/assets/main.js"></script>
+</body>
+</html>

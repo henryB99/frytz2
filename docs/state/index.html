@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>State Management</title>
+    <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Inter:200,300,400&display=swap" rel="stylesheet"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    
+        <meta name="description" content="Learn how to manage the state of fritz2 web-app">
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#333333">
+</head>
+<body class="bg-bg font-sans">
+
+
+<!-- Background color split screen for large screens -->
+<div class="fixed top-0 left-0 w-1/2 h-full bg-bg" aria-hidden="true"></div>
+<div class="fixed top-0 right-0 w-1/2 h-full bg-bg" aria-hidden="true"></div>
+<div class="relative flex flex-col bg-bg">
+<!-- Navbar -->
+<nav class="fixed h-16 px-4 z-20 w-full font-nunito text-white bg-bg bg-gray-800">
+  <div class="relative flex items-center justify-between h-16">
+    <a class="flex items-center justify-start px-0 w-48 hover:text-gray-300 min-w-fit" href="/">
+      <!-- fritz2 logo -->
+      <svg class="ml-1 h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+           fill="currentColor" stroke="none" >
+          <path d="M 9.987 0.229 C 4.469 0.236 0 4.61 0 10.003 C 0 15.401 4.477 19.777 10 19.777 C 15.523 19.777 20 15.401 20 10.003 C 20 4.605 15.523 0.229 10 0.229 C 9.996 0.229 9.992 0.229 9.987 0.229 Z M 14.678 2.662 C 15.144 2.665 15.52 3.043 15.517 3.506 L 15.5 6.862 C 15.497 7.325 15.118 7.699 14.652 7.696 C 14.187 7.694 13.811 7.316 13.813 6.853 L 12.126 6.844 C 11.661 6.842 11.281 7.216 11.278 7.679 L 11.274 8.501 L 12.052 8.501 C 12.072 8.499 12.092 8.499 12.112 8.499 C 12.575 8.499 12.952 8.882 12.952 9.356 C 12.952 9.829 12.575 10.213 12.112 10.213 C 12.089 10.213 12.066 10.212 12.043 10.21 L 7.111 10.21 L 7.111 10.207 C 7.097 10.208 7.084 10.208 7.071 10.208 C 6.607 10.208 6.231 9.825 6.231 9.353 C 6.231 8.881 6.607 8.498 7.071 8.498 C 7.091 8.498 7.111 8.499 7.131 8.501 L 7.9 8.501 L 7.909 6.823 C 7.918 4.969 9.437 3.474 11.3 3.484 L 13.83 3.497 C 13.833 3.034 14.212 2.66 14.678 2.662 Z M 7.887 10.644 L 11.261 10.662 L 11.248 13.179 C 11.238 15.032 9.72 16.527 7.857 16.517 L 6.17 16.509 C 6.167 16.972 5.787 17.346 5.322 17.343 C 4.856 17.341 4.48 16.963 4.483 16.5 L 4.5 13.144 C 4.502 12.681 4.882 12.307 5.348 12.309 C 5.813 12.312 6.189 12.69 6.187 13.153 L 7.031 13.157 C 7.496 13.159 7.876 12.786 7.878 12.322 Z"/>
+        </svg>
+        <div class="ml-3">
+          <span class="text-2xl">fritz2</span>
+          <span class="ml-1 text-xs">1.0-SNAPSHOT</span>
+        </div>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="-mr-2 flex items-center md:hidden">
+      <!-- Mobile menu button -->
+      <button type="button" id="mobile-menu-button" onclick="toggleMenu()"
+              class="p-2 inline-flex items-center justify-center bg-gray-800 rounded-md text-gray-400 hover:bg-gray-900 focus:outline-none focus:ring-1 focus-ring-inset focus:ring-gray-400"
+              aria-controls="mobile-menu" aria-expanded="false">
+        <span class="sr-only">Open menu</span>
+        <span class="mobile-icon block h-6 w-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" data-heroicon-name="menu" data-heroicon-style="outline"><title>open main menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </span>
+        <span class="mobile-icon hidden h-6 w-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" data-heroicon-name="x" data-heroicon-style="outline"><title>close main menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </span>
+      </button>
+    </div>
+    <!-- Links section -->
+    <div class="hidden md:block w-24 md:w-48 lg:w-64 ">
+      <div class="flex items-center justify-end hover:text-gray-200">
+        <!-- Github -->
+        <div class="ml-4 relative flex-shrink-0">
+          <div>
+            <a target="_blank" href="https://github.com/jwstegemann/fritz2">
+              <svg class="mr-1 h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                   fill="currentColor" stroke="none" >
+                <path d="M 9.983 0 C 4.458 0 -0.017 4.478 -0.017 10 C -0.017 14.419 2.848 18.167 6.821 19.488 C 7.321 19.582 7.504 19.273 7.504 19.007 C 7.504 18.769 7.496 18.14 7.492 17.307 C 4.71 17.91 4.123 15.965 4.123 15.965 C 3.668 14.811 3.011 14.503 3.011 14.503 C 2.105 13.883 3.081 13.895 3.081 13.895 C 4.085 13.965 4.613 14.925 4.613 14.925 C 5.504 16.454 6.953 16.013 7.525 15.757 C 7.615 15.11 7.873 14.669 8.158 14.419 C 5.938 14.169 3.603 13.309 3.603 9.478 C 3.603 8.386 3.991 7.494 4.633 6.794 C 4.52 6.542 4.183 5.525 4.72 4.148 C 4.72 4.148 5.558 3.879 7.47 5.173 C 8.27 4.95 9.12 4.84 9.97 4.835 C 10.82 4.84 11.67 4.95 12.47 5.173 C 14.37 3.879 15.208 4.148 15.208 4.148 C 15.745 5.525 15.408 6.542 15.308 6.794 C 15.945 7.494 16.333 8.386 16.333 9.478 C 16.333 13.319 13.995 14.165 11.77 14.411 C 12.12 14.711 12.445 15.324 12.445 16.261 C 12.445 17.599 12.433 18.674 12.433 18.999 C 12.433 19.262 12.608 19.574 13.12 19.474 C 17.121 18.163 19.983 14.413 19.983 10 C 19.983 4.478 15.506 0 9.983 0"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+  <!-- Mobile menu, show/hide based on menu state. -->
+  <div id="mobile-menu" class="fixed z-10 w-full bg-bg top-16 -translate-y-[100vh] transition-transform duration-250 ease-in md:hidden pb-2 border-b border-b-fg px-2 pt-2 pb-3 h-[calc(100vh-4rem)] overflow-y-auto">
+    
+    
+<nav class="flex-1 bg-bg space-y-2" aria-label="Sidebar">
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="academic-cap" data-heroicon-style="solid"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
+            </span>
+        
+        Documentation
+</a>
+
+        
+        
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/start/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Getting Started
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/render/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Render HTML
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/state/"
+   class=" pl-12 bg-bg-highlight border-fg text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        State Management
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/validation/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Validation
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/routing/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Routing
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/http/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Http
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/websockets/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Websockets
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/repositories/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Repositories
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/web-components/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Web Components
+</a>
+
+            
+        
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="puzzle" data-heroicon-style="solid"><path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/></svg>
+            </span>
+        
+        Headless Components
+</a>
+
+        
+        
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/checkboxgroup/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        CheckboxGroup
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/datacollection/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        DataCollection
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/disclosure/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Disclosure
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/inputfield/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        InputField
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/listbox/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Listbox (Select)
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/menu/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Menu
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/modal/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Modal
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/popover/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        PopOver
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/radioGroup/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        RadioGroup
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/switch/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Switch (Toggle)
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/tabgroup/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        TabGroup
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/textarea/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        TextArea
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/tooltip/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Tooltip
+</a>
+
+            
+        
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/blog/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="newspaper" data-heroicon-style="solid"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"/><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"/></svg>
+            </span>
+        
+        Blog
+</a>
+
+        
+        
+            
+        
+    
+</nav>
+
+    
+  </div>
+
+  <!-- 3 column wrapper -->
+<div class="mt-16 h-[calc(100vh-4rem)] flex-grow w-full mx-auto md:flex">
+  <!-- Left sidebar & main wrapper -->
+    <div class="min-w-fit h-full overscroll-none overflow-y-auto w-64 xl:border-b-0 bg-bg hidden md:block">
+        <!-- Start left column area -->
+        <div class="mt-6 relative" style="min-height: 12rem;">
+          
+<nav class="flex-1 bg-bg space-y-2" aria-label="Sidebar">
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="academic-cap" data-heroicon-style="solid"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
+            </span>
+        
+        Documentation
+</a>
+
+        
+        
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/start/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Getting Started
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/render/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Render HTML
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/state/"
+   class=" pl-12 bg-bg-highlight border-fg text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        State Management
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/validation/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Validation
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/routing/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Routing
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/http/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Http
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/websockets/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Websockets
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/repositories/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Repositories
+</a>
+
+            
+                
+                
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/docs/web-components/"
+   class=" pl-12 border-transparent hover:bg-bg-highlight text-relaxed hover:text-relaxed-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+        Web Components
+</a>
+
+            
+        
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/headless/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="puzzle" data-heroicon-style="solid"><path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/></svg>
+            </span>
+        
+        Headless Components
+</a>
+
+        
+        
+    
+        
+<!-- Current: "bg-indigo-50 border-indigo-600 text-indigo-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+
+
+<a href="/blog/"
+   class="font-bold capitalize  border-transparent hover:bg-bg-highlight text-fg-highlight group flex items-center px-3 py-1 text-sm border-l-4 focus:">
+    <!--
+      Heroicon name: outline/home
+
+      Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+    -->
+        
+            
+            <span class="mr-3 flex-shrink-0 h-6 w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-heroicon-name="newspaper" data-heroicon-style="solid"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"/><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"/></svg>
+            </span>
+        
+        Blog
+</a>
+
+        
+        
+    
+</nav>
+
+        </div>
+        <!-- End left column area -->
+    </div>
+
+
+    
+<div class="bg-bg md:min-w-0 md:flex-1 h-full">
+  <div class="h-full py-6 px-5 sm:px-6 lg:px-8 h-full overscroll-none overflow-y-auto bg-bg lg:pr-72">
+    <!-- Start main area-->
+    <div class="relative content prose prose-invert max-w-prose pb-12">
+
+      <h1>State Management</h1>
+
+      
+
+      
+
+      <h2 id="flows" tabindex="-1">Flows</h2>
+<p>fritz2 heavily depends on flows, introduced by <a href="https://github.com/Kotlin/kotlinx.coroutines">kotlinx.coroutines</a>.</p>
+<p>A <code>Flow</code> is a time discrete stream of values.</p>
+<p>Like a collection, you can use <code>Flow</code>s to represent multiple values, but unlike other collections like <code>List</code>s, for example,
+the values are retrieved one by one. fritz2 relies on <code>Flow</code>s to represent values that change over time and lets you react to them (your data-model for example) .</p>
+<p>A <code>Flow</code> is built from a source which creates the values. This source could be your model or the events raised by an element,
+for example. On the other end of the <code>Flow</code>, a simple function called for each element collects the values one by one.
+Between those two ends, various actions can be taken on the data (formatting strings, filtering the values, combining values, etc).</p>
+<p>The great thing about <code>Flow</code>s is that they are <em>cold</em>, which means that nothing is calculated before the result is needed.
+This makes them perfect for fritz2's use case.</p>
+<p>In Kotlin, there is another communication model called <code>Channel</code> which is the <em>hot</em> counterpart of the <code>Flow</code>.
+fritz2 only uses <code>Channel</code>s internally to feed the flows, so you should not encounter them while using fritz2.</p>
+<p>To get more information about <code>Flow</code>s, <code>Channel</code>s, and their API,
+have a look at the <a href="https://kotlinlang.org/docs/reference/coroutines/flow.html">official documentation</a>.</p>
+<p>Now you have seen how fritz2 handles events and the state of your app.</p>
+<h2 id="rendering" tabindex="-1">Rendering</h2>
+<p>A mount-point in fritz2 is an anchor of a <code>Flow</code> somewhere in a structure like the DOM-tree. Afterwards, each value
+appearing on the mounted <code>Flow</code> will be put into the structure at exactly that position replacing the former value.</p>
+<p>Most of the time you will use mount-points in the browser's DOM, allowing you to mount <code>Tag</code>s to some point in the
+html-structure you are building using for example the <code>someFlow.render {}</code> function.</p>
+<p>Inside the <code>RenderContext</code> opened by <code>someFlow.render {}</code>, a new mount-point is created as a <code>&lt;div&gt;</code>-tag and
+added to the current parent-element. Whenever a new value appears on the <code>Flow</code>, the new content is rendered
+and replaces the old elements.</p>
+<p>In this <code>RenderContext</code>, any number of root elements can be created (also none).</p>
+<pre class="language-kotlin"><code class="language-kotlin">someIntFlow<span class="token punctuation">.</span><span class="token function">render</span> <span class="token punctuation">{</span><br>    <span class="token keyword">if</span><span class="token punctuation">(</span>it <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> p <span class="token punctuation">{</span> <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"is even"</span></span> <span class="token punctuation">}</span><br>    <span class="token comment">// nothing is rendered if odd        </span><br><span class="token punctuation">}</span><br><span class="token comment">// or multiple elements</span><br>someStringFlow<span class="token punctuation">.</span><span class="token function">render</span> <span class="token punctuation">{</span> name <span class="token operator">-></span><br>    h5 <span class="token punctuation">{</span> <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"Your name is:"</span></span> <span class="token punctuation">}</span><br>    div <span class="token punctuation">{</span> <span class="token operator">+</span>name <span class="token punctuation">}</span><br>    hr <span class="token punctuation">{</span><span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>The latter example will result in the following DOM structure:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>mount-point<span class="token punctuation">"</span></span> <span class="token attr-name">data-mount-point</span><span class="token punctuation">></span></span> <span class="token comment">&lt;!-- created by `render` function --></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h5</span><span class="token punctuation">></span></span>Your name is:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h5</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>Chris<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hr</span><span class="token punctuation">/></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<p>The CSS-class <code>mount-point</code> consists only of a <code>display: contents;</code> directive so that the element will not appear
+in the visual rendering of the page.</p>
+<p>Whenever the mount-point is definitely the only sub-element of its parent element, you can omit the dedicated
+<code>&lt;div&gt;</code>-mount-point-tag by setting the <code>into</code> parameter to the parent element. In this case the rendering engine
+uses the existing parent node as reference for the mount-point:</p>
+<pre class="language-kotlin"><code class="language-kotlin">render <span class="token punctuation">{</span><br>    dl <span class="token punctuation">{</span> <span class="token comment">// `this` is &lt;dl>-tag within this scope</span><br>        <span class="token function">flowOf</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"fritz2"</span></span> <span class="token keyword">to</span> <span class="token string-literal singleline"><span class="token string">"Awesome web frontend framework"</span></span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>into <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">(</span>title<span class="token punctuation">,</span> def<span class="token punctuation">)</span> <span class="token operator">-></span><br>            <span class="token comment">//                                                      ^^^^^^^^^^^</span><br>            <span class="token comment">//                        define parent node as anchor for mounting    </span><br>            dt <span class="token punctuation">{</span> <span class="token operator">+</span>title <span class="token punctuation">}</span><br>            dd <span class="token punctuation">{</span> <span class="token operator">+</span>def <span class="token punctuation">}</span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>This will result in the following DOM structure:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span> <span class="token attr-name">data-mount-point</span><span class="token punctuation">></span></span> <span class="token comment">&lt;!-- No more dedicated &lt;div> needed! Data attribute gives hint that tag is a mount-point --></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">></span></span>fritz2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">></span></span>Awesome web frontend framework<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">></span></span></code></pre>
+<h2 id="render-lists" tabindex="-1">Render Lists</h2>
+<p>In fritz2 you can render out every type of data in a <code>Flow</code> including lists:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> listFlow <span class="token operator">=</span> <span class="token function">flowOf</span><span class="token punctuation">(</span><span class="token function">listOf</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"a"</span></span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"b"</span></span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"c"</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><br><br>listFlow<span class="token punctuation">.</span><span class="token function">render</span> <span class="token punctuation">{</span> list <span class="token operator">-></span><br>    list<span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span><br>        span <span class="token punctuation">{</span> <span class="token operator">+</span>it <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>But keep in mind that this means re-rendering <em>all</em> <code>span</code>s in this example when the list changes, regardless of how
+many items you actually changed. This might be what you want for small <code>List</code>s,
+for <code>List</code>s that rarely change, or for <code>List</code>s with a small representation in HTML (like just text per item), etc.
+However, for <code>List</code>s that change more often and/or result in complex HTML-trees per item, this does not perform well.</p>
+<p>For those cases, fritz2 offers the method <code>renderEach {}</code> which creates a <code>RenderContext</code> and mounts its result to the DOM.
+<code>renderEach {}</code> works like <code>render {}</code>, but it creates a specialized mount-point in order to
+identify elements for re-rendering. This mount-point compares the last version of your list with the
+new one on every change and applies the minimum necessary patches to the DOM.</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> listFlow <span class="token operator">=</span> <span class="token function">flowOf</span><span class="token punctuation">(</span><span class="token function">listOf</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"a"</span></span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"b"</span></span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"c"</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><br><br>listFlow<span class="token punctuation">.</span><span class="token function">renderEach</span> <span class="token punctuation">{</span><br>    span <span class="token punctuation">{</span> <span class="token operator">+</span>it <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<h2 id="store" tabindex="-1">Store</h2>
+<p>In fritz2, <code>Store</code>s are used to handle your app's state.
+Let's assume the state of your app is a simple <code>String</code>.
+Creating a <code>Store</code> to manage that state is quite easy:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> s <span class="token operator">=</span> <span class="token function">storeOf</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"initial value"</span></span><span class="token punctuation">)</span></code></pre>
+<p>Every <code>Store</code> offers a <code>Flow</code> named <code>data</code> which can be bound as part of your html:</p>
+<pre class="language-kotlin"><code class="language-kotlin">render <span class="token punctuation">{</span><br>    p <span class="token punctuation">{</span><br>        s<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">renderText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>By calling <code>s.data.renderText()</code> a mount-point is created and collects your model values.
+This means a DOM-element is created (in this example it's a <code>span</code> with the text as text-node) and
+bound to your <code>data</code> so that it will change whenever your <code>Store</code>'s state updates. This is called <em>precise data binding</em>.</p>
+<p>You can of course use every intermediate action like <code>map</code>,<code>filter</code>, etc., on the <code>data</code>-flow as on every other <code>Flow</code>:</p>
+<pre class="language-kotlin"><code class="language-kotlin">render <span class="token punctuation">{</span><br>    p <span class="token punctuation">{</span><br>        s<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span> <span class="token string-literal singleline"><span class="token string">"you have entered </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token expression">it<span class="token punctuation">.</span>length</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> characters so far."</span></span> <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">renderText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>To combine data from two or more stores you can use the <code>combine</code> method:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> firstName <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"Foo"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><br><span class="token keyword">val</span> lastName <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"Bar"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><br><br>render <span class="token punctuation">{</span><br>    p <span class="token punctuation">{</span><br>        firstName<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span>lastName<span class="token punctuation">.</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span> firstName<span class="token punctuation">,</span> lastName <span class="token operator">-></span><br>            <span class="token string-literal singleline"><span class="token string">"Your full name is: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$</span><span class="token expression">firstName</span></span><span class="token string"> </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$</span><span class="token expression">lastName</span></span><span class="token string">"</span></span><br>        <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">renderText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>Of course, you can also use a <code>RootStore&lt;T&gt;</code> with a complex model which contains all data that you need in one place.</p>
+<p>You can also bind a <code>Flow</code> to an attribute:</p>
+<pre class="language-kotlin"><code class="language-kotlin">input <span class="token punctuation">{</span><br>    <span class="token function">value</span><span class="token punctuation">(</span>store<span class="token punctuation">.</span>data<span class="token punctuation">)</span><br><span class="token punctuation">}</span></code></pre>
+<p>In this case, only the attribute value will change when the model in your store changes.</p>
+<h2 id="using-handlers" tabindex="-1">Using Handlers</h2>
+<p>Building your <code>Store</code>, you can add <code>Handler</code>s to respond to actions and adjust your model accordingly:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> store <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">""</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">val</span> append <span class="token operator">=</span> handle<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token punctuation">{</span> model<span class="token punctuation">,</span> action<span class="token operator">:</span> String <span class="token operator">-></span><br>        <span class="token string-literal singleline"><span class="token string">"</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$</span><span class="token expression">model</span></span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$</span><span class="token expression">action</span></span><span class="token string">"</span></span><br>    <span class="token punctuation">}</span><br>    <br>    <span class="token keyword">val</span> remove <span class="token operator">=</span> handle<span class="token operator">&lt;</span>Int<span class="token operator">></span> <span class="token punctuation">{</span> model<span class="token punctuation">,</span> action <span class="token operator">-></span><br>        model<span class="token punctuation">.</span><span class="token function">dropLast</span><span class="token punctuation">(</span>action<span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><br>    <span class="token keyword">val</span> clear <span class="token operator">=</span> handle <span class="token punctuation">{</span> model <span class="token operator">-></span><br>        <span class="token string-literal singleline"><span class="token string">""</span></span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>Whenever a <code>String</code> is sent to the <code>append</code>-<code>Handler</code>, it updates the model by appending the text to its current model.
+<code>remove</code> is a <code>Handler</code> which needs the amount of characters as <code>Int</code> to drop from the data, so the type of the action
+is not related to the type of the store itself!
+<code>clear</code> is a <code>Handler</code> that doesn't need any information to do its work, so the second parameter can be omitted.</p>
+<p>Since everything in fritz2 is reactive, most of the time you want to connect a <code>Flow</code> of actions to the <code>Handler</code>
+by calling the <code>handledBy</code> function, which can be called with
+<a href="https://kotlinlang.org/docs/functions.html#infix-notation">infix</a> so the code reads much nicer.</p>
+<p>But it is also possible to call a handler directly, but this variant is less needed than the first one.</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token comment">// use this pattern in most situations </span><br>someFlowOfString handledBy store<span class="token punctuation">.</span>append<br><br><span class="token comment">// but direct call is also possible</span><br>store<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"someValueOfString"</span></span><span class="token punctuation">)</span></code></pre>
+<p>Each <code>Store</code> inherits a <code>Handler</code> called <code>update</code>, accepting the same type as the <code>Store</code> as its action.
+It updates the <code>Store</code>'s value to the new value it receives.
+You can use this handler to conveniently implement <em>two-way-databinding</em> by using the <code>changes</code> event-flow
+of an <code>input</code>-<code>Tag</code>, for example:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> store <span class="token operator">=</span> <span class="token function">storeOf</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">""</span></span><span class="token punctuation">)</span> <span class="token comment">// store: RootStore&lt;String></span><br><br>render <span class="token punctuation">{</span><br>    input <span class="token punctuation">{</span><br>        <span class="token comment">// react to data changes and update the UI</span><br>        <span class="token function">value</span><span class="token punctuation">(</span>store<span class="token punctuation">.</span>data<span class="token punctuation">)</span><br>        <br>        <span class="token comment">// react to UI events and update the data state</span><br>        changes<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span> handledBy store<span class="token punctuation">.</span>update<br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p><code>changes</code> in this example is a <code>Flow</code> of events created by listening to the <code>Change</code>-Event of the underlying input-element.
+Calling <code>values()</code> on it extracts the current value from the input.
+Whenever such an event is raised, a new value appears on the <code>Flow</code> and is processed by the <code>update</code>-Handler of the
+<code>Store</code> to update the model. Event-flows are available for
+<a href="https://www.fritz2.dev/api/core/dev.fritz2.core/-with-events/index.html">all HTML5-events</a>.
+There are some more <a href="https://www.fritz2.dev/api/core/dev.fritz2.core/-listener/index.html">convenience functions</a> to
+help you to extract data from an event or control event-processing.</p>
+<p>You can map the elements of the <code>Flow</code> to a specific action-type before connecting it to the <code>Handler</code>.
+This way you can also add information from the rendering-context to the action.
+You may also use any other source for a <code>Flow</code> like recurring timer events or even external events.</p>
+<p>If you need to purposefully fire an action somewhere inside a <code>RenderContext</code> or a <code>Store</code> you can directly invoke a <code>Handler</code>:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token comment">//call handler with data</span><br>someStore<span class="token punctuation">.</span><span class="token function">someHandler</span><span class="token punctuation">(</span>someValue<span class="token punctuation">)</span><br><br><span class="token comment">//call handler without data</span><br>someStore<span class="token punctuation">.</span><span class="token function">someHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>If you need its handler's code to be executed whenever the model is changed,
+you have to use the <code>drop(1)</code> function on a <code>Flow</code> to skip the <code>initialData</code>:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> store <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"initial"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">init</span> <span class="token punctuation">{</span><br>        <span class="token keyword">data</span><span class="token punctuation">.</span><span class="token function">drop</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> handledBy <span class="token punctuation">{</span><br>            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"model changed to: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$</span><span class="token expression">it</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>By using the ad-hoc <code>handledBy</code> function here your store gets not updated after new data arrives.</p>
+<h2 id="connecting-stores-to-each-other" tabindex="-1">Connecting stores to each other</h2>
+<p>Most real-world applications contain multiple stores which need to be linked to properly react to model changes.</p>
+<p>To make your stores interconnect, fritz2 allows calling <code>Handlers</code> of others stores directly with or
+without a parameter.</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">object</span> SaveStore <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">""</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">val</span> save <span class="token operator">=</span> handle<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token punctuation">{</span> _<span class="token punctuation">,</span> <span class="token keyword">data</span> <span class="token operator">-></span> <span class="token keyword">data</span> <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">object</span> InputStore <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">""</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <br>    <span class="token keyword">val</span> input <span class="token operator">=</span> handle<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token punctuation">{</span> _<span class="token punctuation">,</span> input <span class="token operator">-></span><br>        SaveStore<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span> <span class="token comment">// call other store`s handler</span><br>        input <span class="token comment">// do not forget to return the "next" store value!</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>In cases where you don't know which <code>Handler</code> of another store will handle the exposed data, you can use
+the <code>EmittingHandler</code>, a type of handler that doesn't just take data
+as an argument but also emits data on a new <code>Flow</code> for other handlers to receive.</p>
+<p>Create such a handler by calling the <code>handleAndEmit&lt;T&gt;()</code> function instead of the usual <code>handle()</code> function and add the
+offered data type to the type brackets:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> personStore <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>Person<span class="token operator">></span><span class="token punctuation">(</span><span class="token function">Person</span><span class="token punctuation">(</span><span class="token operator">..</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">val</span> save <span class="token operator">=</span> handleAndEmit<span class="token operator">&lt;</span>Person<span class="token operator">></span> <span class="token punctuation">{</span> person <span class="token operator">-></span><br>        <span class="token function">emit</span><span class="token punctuation">(</span>person<span class="token punctuation">)</span> <span class="token comment">// emits current person</span><br>        <span class="token function">Person</span><span class="token punctuation">(</span><span class="token operator">..</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token comment">// return a new empty person (set as new store value)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>The <code>EmittingHandler</code> named <code>save</code> emits the saved <code>Person</code> on its <code>Flow</code>.
+Another store can be setup to handle this <code>Person</code> by connecting the handlers:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> personStore <span class="token operator">=</span> <span class="token operator">..</span><span class="token punctuation">.</span> <span class="token comment">//see above</span><br><br><span class="token keyword">val</span> personListStore <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Person<span class="token operator">></span><span class="token operator">></span><span class="token punctuation">(</span>emptyList<span class="token operator">&lt;</span>Person<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">val</span> add <span class="token operator">=</span> handle<span class="token operator">&lt;</span>Person<span class="token operator">></span> <span class="token punctuation">{</span> list<span class="token punctuation">,</span> person <span class="token operator">-></span><br>       console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"add new person: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$</span><span class="token expression">person</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><br>       list <span class="token operator">+</span> person<br>    <span class="token punctuation">}</span><br><br>    <span class="token keyword">init</span> <span class="token punctuation">{</span><br>       <span class="token comment">// don't forget to connect the handlers</span><br>       personStore<span class="token punctuation">.</span>save handledBy personListStore<span class="token punctuation">.</span>add<br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>After connecting these two stores via their handlers, a saved <code>Person</code> will also be added to the list
+in <code>personListStore</code>. All depending components will be updated accordingly.</p>
+<p>To see a complete example visit our
+<a href="https://examples.fritz2.dev/validation/build/distributions/index.html">validation example</a> which uses connected
+stores and validate a <code>Person</code> before adding it to a list of <code>Person</code>s.</p>
+<h2 id="history-in-stores" tabindex="-1">History in Stores</h2>
+<p>Sometimes you may want to keep the history of values in your <code>Store</code>, so you can navigate back in time to build an
+undo-function or maybe just for debugging...</p>
+<p>fritz2 offers a history service to do so.</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> store <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">""</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">val</span> history <span class="token operator">=</span> history<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sync</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><br><span class="token punctuation">}</span></code></pre>
+<p>This way you synchronise the history with the updates of your <code>Store</code>, so each new value will be added to the history automatically.</p>
+<p>Without <code>sync()</code>, you have to add new entries to the history manually by calling <code>history.add(entry)</code>.</p>
+<p>You can access the complete history via its <code>Flow</code> as a <code>List</code> of entries. For your convenience <code>history</code> also offers</p>
+<ul>
+<li>a <code>Flow&lt;Boolean&gt;</code> called <code>available</code> representing if entries are available (e.g., to show or hide an undo button)</li>
+<li>a <code>last()</code> method to access the latest entry</li>
+<li>a <code>back()</code> method to get the latest entry and remove it from the history</li>
+<li>a <code>reset()</code> method to clear the history</li>
+</ul>
+<p>So for a <code>Store</code> with a minimal undo function you just have to write:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> store <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">""</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">val</span> history <span class="token operator">=</span> history<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sync</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><br><br>    <span class="token comment">// your handlers go here (add history.reset() here where suitable)</span><br><br>    <span class="token keyword">val</span> undo <span class="token operator">=</span> handle <span class="token punctuation">{</span><br>        history<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br><span class="token operator">..</span><span class="token punctuation">.</span><br><br>render <span class="token punctuation">{</span><br>    <span class="token function">div</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"form"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        <span class="token comment">// insert your form here</span><br><br>        <span class="token function">button</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"btn"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>            <span class="token function">className</span><span class="token punctuation">(</span>store<span class="token punctuation">.</span>history<span class="token punctuation">.</span>available<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>it<span class="token punctuation">)</span> <span class="token string-literal singleline"><span class="token string">""</span></span> <span class="token keyword">else</span> <span class="token string-literal singleline"><span class="token string">"hidden"</span></span> <span class="token punctuation">}</span><span class="token punctuation">)</span><br>            <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"Undo"</span></span><br><br>            clicks handledBy store<span class="token punctuation">.</span>undo<br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<h2 id="track-processing-state-of-stores" tabindex="-1">Track Processing State of Stores</h2>
+<p>When one of your <code>Handler</code>s contains long running actions (like server-calls, etc.) you might want to keep the user
+informed about that something is going on.</p>
+<p>Using fritz2 you can use the <code>tracker</code>-service to implement this:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> store <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">""</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">val</span> tracking <span class="token operator">=</span> <span class="token function">tracker</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br><br>    <span class="token keyword">val</span> save <span class="token operator">=</span> handle <span class="token punctuation">{</span> model <span class="token operator">-></span><br>        tracking<span class="token punctuation">.</span><span class="token function">track</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"myTransaction"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>            <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">1500</span><span class="token punctuation">)</span> <span class="token comment">// do something that takes a while</span><br>            <span class="token string-literal singleline"><span class="token string">"</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$</span><span class="token expression">model</span></span><span class="token string">."</span></span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br>render <span class="token punctuation">{</span><br>    <span class="token function">button</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"btn"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        <span class="token function">className</span><span class="token punctuation">(</span>store<span class="token punctuation">.</span>tracking<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span><br>            <span class="token keyword">if</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span> <span class="token string-literal singleline"><span class="token string">"spinner"</span></span> <span class="token keyword">else</span> <span class="token string-literal singleline"><span class="token string">""</span></span><br>        <span class="token punctuation">}</span><span class="token punctuation">)</span><br>        <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"save"</span></span><br>        clicks handledBy store<span class="token punctuation">.</span>save<br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>The service provides you with a <code>Flow</code> representing the description of the currently running transaction or <code>null</code>.</p>
+<p>Filter the <code>Flow</code> using the meta-data you chose when calling <code>track(meta-data)</code> if you want to react to only certain transactions.</p>
+<p>Of course, you can also use the meta-data to show to the user what is currently running (in a status-bar for example).</p>
+<h2 id="complex-data-models" tabindex="-1">Complex Data-Models</h2>
+<p>Most of the time, your model for a view will not be of just a simple data-type but a complex entity, like a
+person having a name, multiple addresses, an email, a date of birth, etc.</p>
+<p>In those cases, you will most likely need <code>Store</code>s for the single properties of your main entity, and - later on - for
+the properties of the sub-entity like the street in an address in our example from above.</p>
+<p>fritz2 uses a mechanism called <code>Lens</code> to describe the relationship between an entity and its sub-entities and properties.</p>
+<h2 id="lenses" tabindex="-1">Lenses</h2>
+<p>A <code>Lens</code> is basically a way to describe the relation between an outer and inner entity in a structure.
+It focuses on the inner entity from the viewpoint of the outer entity, which is how it got its name.
+Lenses are especially useful when using immutable data-types like fritz2 does.
+A <code>Lens</code> needs to handle the following:</p>
+<ul>
+<li>Getting the value of the inner entity from a given instance of the outer entity</li>
+<li>Creating a new instance of the outer entity (immutable!) as a copy of a given one with a different value only for the inner entity</li>
+</ul>
+<p>In fritz2, a <code>Lens</code> is defined by the following interface:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">interface</span> Lens<span class="token operator">&lt;</span>P<span class="token punctuation">,</span>T<span class="token operator">></span> <span class="token punctuation">{</span><br>    <span class="token keyword">val</span> id<span class="token operator">:</span> String<br>    <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span>parent<span class="token operator">:</span> P<span class="token punctuation">)</span><span class="token operator">:</span> T<br>    <span class="token keyword">fun</span> <span class="token keyword">set</span><span class="token punctuation">(</span>parent<span class="token operator">:</span> P<span class="token punctuation">,</span> value<span class="token operator">:</span> T<span class="token punctuation">)</span><span class="token operator">:</span> P<br><span class="token punctuation">}</span></code></pre>
+<p>You can easily use this interface by just implementing <code>get()</code> and <code>set()</code>.
+fritz2 also offers the method <code>lens()</code> for a short-and-sweet-experience:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> nameLens <span class="token operator">=</span> <span class="token function">lens</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"name"</span></span><span class="token punctuation">,</span> <span class="token punctuation">{</span> it<span class="token punctuation">.</span>name <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> person<span class="token punctuation">,</span> value <span class="token operator">-></span> person<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>name <span class="token operator">=</span> value<span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>No magic there. The first parameter sets an id for the <code>Lens</code>. When using <code>Lens</code>es with <code>SubStore</code>s, the <code>id</code> will be used to generate a valid html-id representing the path through your model.
+This can be used to identify your elements semantically (for automated ui-tests for example).</p>
+<p>If you have deep nested structures or a lot of them, you may want to automate this behavior.
+fritz2 offers an annotation <code>@Lenses</code> you can add to your data-classes in the <code>commonMain</code> source-set of
+your multiplatform project:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token annotation builtin">@Lenses</span><br><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> value<span class="token operator">:</span> String<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token comment">// needs to be declared! The generated lens-factories are created within.</span><br><span class="token punctuation">}</span></code></pre>
+<p>Using an annotation-processor, fritz2 builds factory methods for each public constructor property within the
+companion object of the data class from these annotations which contains all the <code>Lens</code>es you need.
+They are named exactly like the entities and properties, so it's easy to use:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> nameLens <span class="token operator">=</span> Person<span class="token punctuation">.</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>You can see it in action at our <a href="https://examples.fritz2.dev/nestedmodel/build/distributions/index.html">nestedmodel-example</a>.</p>
+<p>Keep in mind that your annotated classes have to be in your <code>commonMain</code> source-set
+otherwise the automatic generation of the lenses will not work!</p>
+<p>Have a look at the <a href="https://examples.fritz2.dev/validation/build/distributions/index.html">validation-example</a>
+to see how to set it up.</p>
+<p>This will also help you define a multiplatform project for sharing your model and validation code between
+the browser and backend.</p>
+<p>Having a <code>Lens</code> available which points to some specific property makes it very easy to get a <code>SubStore</code> for that
+property from a <code>Store</code> of the parent entity:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token comment">// given the following nested data classes...</span><br><span class="token annotation builtin">@Lenses</span><br><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Name</span><span class="token punctuation">(</span><span class="token keyword">val</span> firstname<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> lastname<span class="token operator">:</span> String<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">companion</span> <span class="token keyword">object</span><br><span class="token punctuation">}</span><br><br><span class="token annotation builtin">@Lenses</span> <br><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> Name<span class="token punctuation">,</span> description<span class="token operator">:</span> String<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">companion</span> <span class="token keyword">object</span><br><span class="token punctuation">}</span><br><br><span class="token comment">// ... you can create a root-store...</span><br><span class="token keyword">val</span> personStore <span class="token operator">=</span> <span class="token function">storeOf</span><span class="token punctuation">(</span><span class="token function">Person</span><span class="token punctuation">(</span><span class="token function">Name</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"first name"</span></span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"last name"</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"more text"</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><br><span class="token comment">// ... and a sub-store using the automatic generated lens-factory `Person.name()`</span><br><span class="token keyword">val</span> nameStore <span class="token operator">=</span> personStore<span class="token punctuation">.</span><span class="token function">sub</span><span class="token punctuation">(</span>Person<span class="token punctuation">.</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p>Now you can use your <code>nameStore</code> exactly like any other <code>Store</code> to set up <em>two-way-databinding</em>, call <code>sub(...)</code>
+again to access the properties of <code>Name</code>. If a <code>SubStore</code> contains a <code>List</code>,
+you can of course iterate over it by using <code>renderEach {}</code>.
+It's fully recursive from here on down to the deepest nested parts of your model.</p>
+<p>You can also add <code>Handler</code>s to your <code>SubStore</code>s by simply calling the <code>handle</code>-method:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> booleanSubStore <span class="token operator">=</span> parentStore<span class="token punctuation">.</span><span class="token function">sub</span><span class="token punctuation">(</span>someLens<span class="token punctuation">)</span><br><span class="token keyword">val</span> switch <span class="token operator">=</span> booleanSubStore<span class="token punctuation">.</span><span class="token function">handle</span> <span class="token punctuation">{</span> model<span class="token operator">:</span> Boolean <span class="token operator">-></span> <br>    <span class="token operator">!</span>model<br><span class="token punctuation">}</span><br><br>render <span class="token punctuation">{</span><br>    button <span class="token punctuation">{</span><br>        <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"switch state"</span></span><br>        clicks handledBy switch<br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>To keep your code well-structured, it is recommended to implement complex logic at your <code>RootStore</code> or inherit it by using interfaces.
+However, the code above is a decent solution for small (convenience-)handlers.</p>
+<h2 id="formatting-values" tabindex="-1">Formatting Values</h2>
+<p>In html you can only use <code>Strings</code> in your attributes like in the <code>value</code> attribute of <code>input {}</code>. To use other data
+types in your model you have to specify how to represent a specific value as <code>String</code> (e.g. Number, Currency, Date).
+When you work with <code>input {}</code> you also need parse the entered text back to your data type.
+For all Kotlin basic types there is a convenience function <code>asString()</code> which generates a <code>Lens</code> from this type to <code>String</code>
+and vice versa. Therefore, it calls internally the <code>T.toString()</code> and <code>String.toT()</code> functions.</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> ageLens<span class="token operator">:</span> Lens<span class="token operator">&lt;</span>Person<span class="token punctuation">,</span> Int<span class="token operator">></span> <span class="token operator">=</span> Person<span class="token punctuation">.</span><span class="token function">age</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// cannot used in Tag attributes</span><br><span class="token keyword">val</span> ageLensAsString<span class="token operator">:</span> Lens<span class="token operator">&lt;</span>Person<span class="token punctuation">,</span> String<span class="token operator">></span> <span class="token operator">=</span> Person<span class="token punctuation">.</span><span class="token function">age</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">asString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// now it is useable</span></code></pre>
+<p>fritz2 also provides a special function <code>format()</code> for creating a <code>Lens&lt;P, String&gt;</code> for special types that are not basic:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token operator">&lt;</span>P<span class="token operator">></span> <span class="token function">format</span><span class="token punctuation">(</span>parse<span class="token operator">:</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span> <span class="token operator">-></span> P<span class="token punctuation">,</span> format<span class="token operator">:</span> <span class="token punctuation">(</span>P<span class="token punctuation">)</span> <span class="token operator">-></span> String<span class="token punctuation">)</span><span class="token operator">:</span> Lens<span class="token operator">&lt;</span>P<span class="token punctuation">,</span> String<span class="token operator">></span></code></pre>
+<p>The following <a href="https://examples.fritz2.dev/validation/build/distributions/index.html">validation example</a> demonstrates its usage:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">import</span> dev<span class="token punctuation">.</span>fritz2<span class="token punctuation">.</span>lens<span class="token punctuation">.</span>format<br><br><span class="token keyword">object</span> Formats <span class="token punctuation">{</span><br>    <span class="token keyword">private</span> <span class="token keyword">val</span> dateFormat<span class="token operator">:</span> DateFormat <span class="token operator">=</span> <span class="token function">DateFormat</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"yyyy-MM-dd"</span></span><span class="token punctuation">)</span><br>    <span class="token keyword">val</span> date<span class="token operator">:</span> Lens<span class="token operator">&lt;</span>Date<span class="token punctuation">,</span> String<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">format</span><span class="token punctuation">(</span><br>        parse <span class="token operator">=</span> <span class="token punctuation">{</span> dateFormat<span class="token punctuation">.</span><span class="token function">parseDate</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><br>        format <span class="token operator">=</span> <span class="token punctuation">{</span> dateFormat<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span> <span class="token punctuation">}</span><br>    <span class="token punctuation">)</span><br><span class="token punctuation">}</span></code></pre>
+<p>When you have created a special <code>Lens</code> for your own data type like <code>Formats.date</code>, you can then use it to create a new <code>SubStore</code>:
+concatenate your Lenses before using them in the <code>sub()</code> method e.g. <code>sub(Person.birthday() + Fromat.dateLens)</code> or
+call the method <code>sub()</code> on the <code>SubStore</code> of your custom type <code>P</code> with your formatting <code>Lens</code> e.g <code>sub(Format.dateLens)</code>.</p>
+<p>Here is the code from the <a href="https://examples.fritz2.dev/validation/build/distributions/index.html">validation example</a>
+which uses the special <code>Lens</code> in the <code>Formats</code> object specified above for the <code>com.soywiz.klock.Date</code> type:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">import</span> com<span class="token punctuation">.</span>soywiz<span class="token punctuation">.</span>klock<span class="token punctuation">.</span>Date<br><span class="token operator">..</span><span class="token punctuation">.</span><br><br><span class="token keyword">val</span> personStore <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>Person<span class="token operator">></span><span class="token punctuation">(</span><span class="token function">Person</span><span class="token punctuation">(</span><span class="token function">createUUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><br><span class="token operator">..</span><span class="token punctuation">.</span><br><span class="token keyword">val</span> birthday <span class="token operator">=</span> personStore<span class="token punctuation">.</span><span class="token function">sub</span><span class="token punctuation">(</span>Person<span class="token punctuation">.</span><span class="token function">birthday</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> Format<span class="token punctuation">.</span>date<span class="token punctuation">)</span><br><span class="token comment">// or</span><br><span class="token keyword">val</span> birthday <span class="token operator">=</span> personStore<span class="token punctuation">.</span><span class="token function">sub</span><span class="token punctuation">(</span>Person<span class="token punctuation">.</span><span class="token function">birthday</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sub</span><span class="token punctuation">(</span>Format<span class="token punctuation">.</span>date<span class="token punctuation">)</span><br><span class="token operator">..</span><span class="token punctuation">.</span><br><span class="token function">input</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"form-control"</span></span><span class="token punctuation">,</span> id <span class="token operator">=</span> birthday<span class="token punctuation">.</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    value <span class="token operator">=</span> birthday<span class="token punctuation">.</span>data<br>    type <span class="token operator">=</span> <span class="token keyword">const</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"date"</span></span><span class="token punctuation">)</span><br><br>    changes<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span> handledBy birthday<span class="token punctuation">.</span>update<br><span class="token punctuation">}</span></code></pre>
+<p>The resulting <code>SubStore</code> is a <code>Store&lt;String&gt;</code>.</p>
+<p>You can of course reuse your custom formatting <code>Lens</code> for every <code>SubStore</code> of the same type (in this case <code>com.soywiz.klock.Date</code>).</p>
+<h2 id="improve-rendering" tabindex="-1">Improve Rendering</h2>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">object</span> SeqStore <span class="token operator">:</span> RootStore<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token operator">></span><span class="token punctuation">(</span><span class="token function">listOf</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"one"</span></span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"two"</span></span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"three"</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">var</span> count <span class="token operator">=</span> <span class="token number">0</span><br><br>    <span class="token keyword">val</span> addItem <span class="token operator">=</span> handle <span class="token punctuation">{</span> list <span class="token operator">-></span><br>        count<span class="token operator">++</span><br>        list <span class="token operator">+</span> <span class="token string-literal singleline"><span class="token string">"Yet another item: No. </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$</span><span class="token expression">count</span></span><span class="token string">"</span></span><br>    <span class="token punctuation">}</span><br>    <span class="token keyword">val</span> deleteItem <span class="token operator">=</span> handle<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token punctuation">{</span> list<span class="token punctuation">,</span> current <span class="token operator">-></span><br>        list<span class="token punctuation">.</span><span class="token function">minus</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    render <span class="token punctuation">{</span><br>        section <span class="token punctuation">{</span><br>            ul <span class="token punctuation">{</span><br>                SeqStore<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">renderEach</span> <span class="token punctuation">{</span> s <span class="token operator">-></span><br>                    li <span class="token punctuation">{</span><br>                        <span class="token function">button</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"btn"</span></span><span class="token punctuation">,</span> id <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"delete-btn"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>                            <span class="token operator">+</span>s<br>                            clicks<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"Deleting </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$</span><span class="token expression">s</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span> s <span class="token punctuation">}</span> handledBy SeqStore<span class="token punctuation">.</span>deleteItem<br>                        <span class="token punctuation">}</span><br>                    <span class="token punctuation">}</span><br>                <span class="token punctuation">}</span><br>            <span class="token punctuation">}</span><br>            <span class="token function">button</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"button"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>                <span class="token operator">+</span><span class="token string-literal singleline"><span class="token string">"Add an item"</span></span><br>                clicks handledBy SeqStore<span class="token punctuation">.</span>addItem<br>            <span class="token punctuation">}</span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>In this example, <code>renderEach</code> uses the equals function to determine whether an item at a given index is still the same.
+So for the <code>String</code> example, renderEach won't patch your DOM when &quot;two&quot; is replaced by another instance of String
+with the same content. It will however remove the <code>li</code> representing &quot;two&quot; when the item at index 1 is replaced
+by &quot;another two&quot; and a newly rendered <code>li</code> is inserted with this text content. So be aware that the lambda you pass
+to <code>renderEach</code> is executed whenever the DOM representation of a new or changed item is rendered.</p>
+<p>When dealing with more complex data models, this sometimes isn't what you want.</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token annotation builtin">@Lenses</span><br><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">ToDo</span><span class="token punctuation">(</span><br>    <span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span><br>    <span class="token keyword">val</span> text<span class="token operator">:</span> String<span class="token punctuation">,</span><br>    <span class="token keyword">val</span> completed<span class="token operator">:</span> Boolean<br><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">companion</span> <span class="token keyword">object</span><br><span class="token punctuation">}</span></code></pre>
+<p>When you have a <code>ToDo</code> like this in your list, which is rendered by..</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> toDoListStore <span class="token operator">=</span> <span class="token function">storeOf</span><span class="token punctuation">(</span><span class="token function">listOf</span><span class="token punctuation">(</span><span class="token function">ToDo</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"foo"</span></span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">ToDo</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string-literal singleline"><span class="token string">"bar"</span></span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><br><br><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    render <span class="token punctuation">{</span><br>        section <span class="token punctuation">{</span><br>            toDoListStore<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">renderEach</span><span class="token punctuation">(</span>ToDo<span class="token operator">::</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span> toDo <span class="token operator">-></span><br>                <span class="token keyword">val</span> toDoStore <span class="token operator">=</span> toDoListStore<span class="token punctuation">.</span><span class="token function">sub</span><span class="token punctuation">(</span>toDo<span class="token punctuation">,</span> ToDo<span class="token operator">::</span>id<span class="token punctuation">)</span><br>                li <span class="token punctuation">{</span><br>                    <span class="token keyword">val</span> completed <span class="token operator">=</span> toDoStore<span class="token punctuation">.</span><span class="token function">sub</span><span class="token punctuation">(</span>ToDo<span class="token punctuation">.</span><span class="token function">completed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>data<br>                    <span class="token comment">// css is based on https://tailwindcss.com</span><br>                    <span class="token function">className</span><span class="token punctuation">(</span>completed<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>it<span class="token punctuation">)</span> <span class="token string-literal singleline"><span class="token string">"line-through"</span></span> <span class="token keyword">else</span> <span class="token string-literal singleline"><span class="token string">""</span></span><span class="token punctuation">}</span><span class="token punctuation">)</span><br>                    <span class="token operator">+</span>toDo<span class="token punctuation">.</span>text<br>                <span class="token punctuation">}</span><br>            <span class="token punctuation">}</span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>you might just want the <code>class</code>-attribute to be re-rendered when the <code>ToDo</code> at a given index is still the same,
+but just the value of its <code>completed</code> state changes. <code>renderEach</code> must be told how to determine, whether an element
+at an index is still the same entity although one or more of its attributes (or sub-entities) have changed by
+passing an <code>IdProvider</code>.</p>
+<p>An <code>IdProvider</code> is a function mapping an entity to a unique id of arbitrary type. In this example, we just use the
+<code>id</code>-attribute of the <code>ToDo</code>.</p>
+<p>Then create a <code>SubStore</code> for a given entity conveniently by calling <code>sub(someEntity, properIdProvider)</code> on
+a <code>Store&lt;List&lt;*&gt;&gt;</code>. Of course you can do this yourself by mapping the flows if you work on a <code>Flow&lt;List&lt;*&gt;&gt;</code> and
+have no <code>Store</code> available or don't want to utilize fritz2's <code>Lens</code>es:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> completed <span class="token operator">=</span> toDoListStore<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span> it<span class="token punctuation">.</span><span class="token function">find</span> <span class="token punctuation">{</span> t <span class="token operator">-></span> t<span class="token punctuation">.</span>id <span class="token operator">==</span> toDo<span class="token punctuation">.</span>id <span class="token punctuation">}</span> <span class="token operator">?:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span></code></pre>
+<p>Regardless if you use a <code>SubStore</code> or your mapped <code>Flow</code>: be aware that in the example above nothing will happen to
+your DOM, when the text of a <code>ToDo</code> changes, but it is still at the same position in the list. fritz2 determines
+that still the same entity (identified by the <code>IdProvider</code>) is at the same place in the list and therefore the <code>li</code>
+as a whole won't be re-rendered, but just the <code>class</code>-attribute (which is mounted to its own mountpoint depending
+on you <code>completed</code>-flow). This might be exactly what you want, but it depends on your use-case.</p>
+<p>You can easily do two-way-databinding inside <code>renderEach</code> using a <code>SubStore</code> created for a particular entity as seen
+above. This of course only makes sense in combination with an <code>IdProvider</code>:</p>
+<pre class="language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> toDoListStore <span class="token operator">=</span> <span class="token function">storeOf</span><span class="token punctuation">(</span><span class="token function">listOf</span><span class="token punctuation">(</span><span class="token function">ToDo</span><span class="token punctuation">(</span>text <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"foo"</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">ToDo</span><span class="token punctuation">(</span>text <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"bar"</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><br><br><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    render <span class="token punctuation">{</span><br>        section <span class="token punctuation">{</span><br>            toDoListStore<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">renderEach</span><span class="token punctuation">(</span>ToDo<span class="token operator">::</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span> toDo <span class="token operator">-></span><br>                <span class="token keyword">val</span> toDoStore <span class="token operator">=</span> toDoListStore<span class="token punctuation">.</span><span class="token function">sub</span><span class="token punctuation">(</span>toDo<span class="token punctuation">,</span> ToDo<span class="token operator">::</span>id<span class="token punctuation">)</span><br>                li <span class="token punctuation">{</span><br>                    input <span class="token punctuation">{</span><br>                        <span class="token function">value</span><span class="token punctuation">(</span>toDoStore<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">map</span> <span class="token punctuation">{</span> it<span class="token punctuation">.</span>text <span class="token punctuation">}</span><span class="token punctuation">)</span><br>                        changes<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span> handledBy toDoStore<span class="token punctuation">.</span><span class="token function">sub</span><span class="token punctuation">(</span>ToDo<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span class="token punctuation">.</span>update<br>                    <span class="token punctuation">}</span><br>                <span class="token punctuation">}</span><br>            <span class="token punctuation">}</span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>If you need two-way-databinding directly on a <code>Store</code>'s <code>data</code> without any intermediate operations
+(filters, maps, etc.), call <code>renderEach(IdProvider)</code> directly on the <code>Store</code>. This will provide the <code>SubStore</code> as
+the render-lambda's parameter for each element.</p>
+<p>Now you know how to handle all kinds of data and structures in your <code>Store</code>s.
+Next, you might want to check whether your model is valid. In fritz2 this is done with <a href="/docs/validation">Validation</a>.</p>
+
+
+    </div>
+    <!-- End main area -->
+  </div>
+</div>
+
+<div
+    class="fixed lg:block top-16 right-0 h-full hidden pr-4 sm:pr-6 lg:pr-8 lg:pr-2">
+    <div class="w-64 h-full overscroll-none overflow-y-auto pl-6 py-6">
+        <!-- Start right column area -->
+        <div class="h-full relative" style="min-height: 16rem;">
+
+            <h2 class="text-sm font-bold capitalize text-fg-highlight mb-4">On this Page</h2>
+
+            <nav class="toc" >
+        <ul><li><a href="#flows">Flows</a></li><li><a href="#rendering">Rendering</a></li><li><a href="#render-lists">Render Lists</a></li><li><a href="#store">Store</a></li><li><a href="#using-handlers">Using Handlers</a></li><li><a href="#connecting-stores-to-each-other">Connecting stores to each other</a></li><li><a href="#history-in-stores">History in Stores</a></li><li><a href="#track-processing-state-of-stores">Track Processing State of Stores</a></li><li><a href="#complex-data-models">Complex Data-Models</a></li><li><a href="#lenses">Lenses</a></li><li><a href="#formatting-values">Formatting Values</a></li><li><a href="#improve-rendering">Improve Rendering</a></li></ul>
+      </nav>
+
+        </div>
+        <!-- End right column area -->
+    </div>
+</div>
+
+
+  </div>
+</div>
+
+
+<script src="/assets/main.js"></script>
+</body>
+</html>

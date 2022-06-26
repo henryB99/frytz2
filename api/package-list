@@ -1,0 +1,27 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:////PointingToDeclaration/headless/[root]/index.html
+$dokka.location://tooltip/dev.fritz2.core.Tag[org.w3c.dom.HTMLElement]#kotlin.String?#kotlin.String?#kotlin.Function1[dev.fritz2.core.ScopeContext,kotlin.Unit]#kotlin.Function1[Tooltip[org.w3c.dom.HTMLDivElement],kotlin.Unit]/PointingToDeclaration/headless/[root]/tooltip.html
+$dokka.location://tooltip/dev.fritz2.core.Tag[org.w3c.dom.HTMLElement]#kotlin.String?#kotlin.String?#kotlin.Function1[dev.fritz2.core.ScopeContext,kotlin.Unit]#kotlin.Function5[dev.fritz2.core.RenderContext,kotlin.String?,kotlin.String?,kotlin.Function1[dev.fritz2.core.ScopeContext,kotlin.Unit],kotlin.Function1[dev.fritz2.core.Tag[TypeParam(bounds=[org.w3c.dom.HTMLElement])],kotlin.Unit],dev.fritz2.core.Tag[TypeParam(bounds=[org.w3c.dom.HTMLElement])]]#kotlin.Function1[Tooltip[TypeParam(bounds=[org.w3c.dom.HTMLElement])],kotlin.Unit]/PointingToDeclaration/headless/[root]/tooltip.html
+$dokka.location:/Tooltip///PointingToDeclaration/headless/[root]/-tooltip/index.html
+$dokka.location:/Tooltip/Tooltip/#dev.fritz2.core.Tag[org.w3c.dom.HTMLElement]#kotlin.Function5[dev.fritz2.core.RenderContext,kotlin.String?,kotlin.String?,kotlin.Function1[dev.fritz2.core.ScopeContext,kotlin.Unit],kotlin.Function1[dev.fritz2.core.Tag[TypeParam(bounds=[org.w3c.dom.HTMLElement])],kotlin.Unit],dev.fritz2.core.Tag[TypeParam(bounds=[org.w3c.dom.HTMLElement])]]#kotlin.String?#kotlin.String?#kotlin.Function1[dev.fritz2.core.ScopeContext,kotlin.Unit]/PointingToDeclaration/headless/[root]/-tooltip/-tooltip.html
+$dokka.location:/Tooltip/renderContext/#/PointingToDeclaration/headless/[root]/-tooltip/render-context.html
+module:core
+dev.fritz2.core
+dev.fritz2.history
+dev.fritz2.remote
+dev.fritz2.repository
+dev.fritz2.repository.localstorage
+dev.fritz2.repository.rest
+dev.fritz2.routing
+dev.fritz2.tracking
+dev.fritz2.validation
+dev.fritz2.webcomponents
+module:headless
+dev.fritz2.headless.components
+dev.fritz2.headless.foundation
+dev.fritz2.headless.foundation.utils.popper
+dev.fritz2.headless.foundation.utils.scrollintoview
+dev.fritz2.headless.validation
+module:lenses-annotation-processor
+dev.fritz2.lens
